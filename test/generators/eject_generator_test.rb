@@ -12,7 +12,7 @@ class EjectGeneratorTest < Minitest::Test
   def test_component_descriptions_are_non_empty_strings
     JetUi::Generators::EjectGenerator::COMPONENT_DESCRIPTIONS.each do |name, desc|
       assert_kind_of String, desc, "#{name}: description must be a String"
-      refute_empty desc.strip, "#{name}: description must not be empty" # rubocop:disable Rails/RefuteMethods
+      refute_equal '', desc.strip, "#{name}: description must not be empty"
     end
   end
 

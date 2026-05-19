@@ -13,6 +13,6 @@ class InstallGeneratorTest < Minitest::Test
   end
 
   def test_desc_includes_component_count
-    assert_match(/\d+ /, JetUi::Generators::InstallGenerator.desc)
+    assert_match(/\b26\b/, JetUi::Generators::InstallGenerator.desc)
   end
 end

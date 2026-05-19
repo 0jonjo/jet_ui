@@ -43,6 +43,11 @@ Rails/DynamicFindBy:
 Minitest/MultipleAssertions:
   Enabled: false
 
+# Generator tests use plain Minitest::Test — assert_not_* helpers are ActiveSupport-only
+Rails/RefuteMethods:
+  Exclude:
+    - "test/generators/**/*"
+
 # ViewComponent::Base#initialize does not require super
 Lint/MissingSuper:
   Enabled: false
