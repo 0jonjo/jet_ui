@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require 'rails/generators'
+require_relative '../eject/eject_generator'
 
 module JetUi
   module Generators
@@ -12,7 +13,7 @@ module JetUi
       source_root File.expand_path('templates', __dir__)
 
       desc <<~DESC
-        JetUi is a ViewComponent-based UI library for Rails — 26 ready-made
+        JetUi is a ViewComponent-based UI library for Rails — #{EjectGenerator::COMPONENT_DESCRIPTIONS.size} ready-made
         components styled with Tailwind CSS v4, matching the design system at
         ui.jetrockets.com.
 

@@ -2,3 +2,4 @@
 /coverage/
 /vendor/bundle/
 Gemfile.lock
+.tool-versions

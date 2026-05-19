@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require 'test_helper'
+require 'generators/jet_ui/eject/eject_generator'
 require 'generators/jet_ui/install/install_generator'
 
 class InstallGeneratorTest < Minitest::Test
@@ -13,6 +14,8 @@ class InstallGeneratorTest < Minitest::Test
   end
 
   def test_desc_includes_component_count
-    assert_match(/\b26\b/, JetUi::Generators::InstallGenerator.desc)
+    count = JetUi::Generators::EjectGenerator::COMPONENT_DESCRIPTIONS.size.to_s
+
+    assert_includes JetUi::Generators::InstallGenerator.desc, count
   end
 end

@@ -45,7 +45,8 @@ module JetUi
 
         Available components (#{COMPONENT_DESCRIPTIONS.size}):
 
-        #{COMPONENT_DESCRIPTIONS.map { |name, d| "  #{name.ljust(15)} #{d}" }.join("\n")}
+        #{pad = COMPONENT_DESCRIPTIONS.keys.map(&:length).max
+          COMPONENT_DESCRIPTIONS.sort.map { |name, d| "  #{name.ljust(pad)} #{d}" }.join("\n")}
 
         Examples:
           rails generate jet_ui:eject btn
