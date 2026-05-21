@@ -9,67 +9,6 @@ module JetUi
         [File.expand_path('../../../..', __dir__)]
       end
 
-      COMPONENT_DESCRIPTIONS = {
-        'accordion' => 'native <details>/<summary> accordion; animated chevron; no JS',
-        'avatar' => 'user avatar with image, initials fallback, and size variants',
-        'breadcrumbs' => 'breadcrumb navigation trail with item slots',
-        'btn' => 'button; variants: default, outline, ghost, destructive; sizes: sm, md, lg',
-        'card' => 'content card with header, body, footer, title, subtitle slots',
-        'clipboard' => 'copy-to-clipboard button; accepts value: or source_id:',
-        'divider' => 'horizontal/vertical separator; optional label text',
-        'drawer' => '<dialog>-based side panel; swipe-to-close on mobile',
-        'dropdown' => 'floating menu; viewport-aware positioning; link/button/title/divider items',
-        'empty' => 'empty-state block; icon, title, description, actions slots',
-        'flash' => 'flash messages; variants: info, success, warning, error; auto-dismiss',
-        'header' => 'page header; direction, align, justify, sticky, bordered modifiers',
-        'icon' => 'inline SVG icon wrapper; size and color variants',
-        'list' => 'vertical list with icon, content, action slots; divided variant',
-        'modal' => '<dialog>-based modal; sizes sm-6xl; inline and Turbo Frame patterns',
-        'navbar' => 'top navigation bar; brand, main, content, actions slots; responsive',
-        'pagy' => 'Pagy pagination; requires pagy gem',
-        'popover' => 'click-triggered popover; placement: top, bottom, left, right',
-        'sidebar' => 'sidebar nav with menu, section, title, link slots; active-link detection',
-        'spinner' => 'loading spinner; size and color variants',
-        'stepper' => 'multi-step progress indicator; numbered or icon steps',
-        'table' => 'data table with thead, tbody, tfoot, tr, th, td slots',
-        'tabs' => 'tabbed navigation; variants: pill, underline; icon support',
-        'timeline' => 'vertical timeline with dot, content, time slots',
-        'tooltip' => 'hover/focus tooltip; placement: top, bottom, left, right',
-        'turbo_confirm' => 'styled <dialog> replacing browser confirm(); integrates with data-turbo-confirm'
-      }.freeze
-
-      desc <<~DESC
-        Copies one or more JetUi component source files into your application
-        so they can be customised locally. Ejected files take precedence over
-        the gem's built-in versions automatically — no extra configuration needed.
-
-        Available components (#{COMPONENT_DESCRIPTIONS.size}):
-
-        #{pad = COMPONENT_DESCRIPTIONS.keys.map(&:length).max
-          COMPONENT_DESCRIPTIONS.sort.map { |name, d| "  #{name.ljust(pad)} #{d}" }.join("\n")}
-
-        Examples:
-          rails generate jet_ui:eject btn
-          rails generate jet_ui:eject flash
-          rails generate jet_ui:eject modal drawer
-          rails generate jet_ui:eject btn --skip-test
-          rails generate jet_ui:eject btn --skip-preview
-          rails generate jet_ui:eject flash --skip-javascript
-          rails generate jet_ui:eject btn --skip-test --skip-preview
-      DESC
-
-      argument :components, type: :array, banner: 'component [component ...]',
-                            desc: 'One or more component names to eject (e.g. btn card)'
-
-      class_option :skip_test, type: :boolean, default: false,
-                               desc: 'Skip ejecting the component test file'
-
-      class_option :skip_preview, type: :boolean, default: false,
-                                  desc: 'Skip ejecting the ViewComponent preview file'
-
-      class_option :skip_javascript, type: :boolean, default: false,
-                                     desc: 'Skip ejecting the Stimulus controller JS file (for components that have one)'
-
       MANIFEST = {
         'btn' => {
           files: [
@@ -370,11 +309,41 @@ module JetUi
         }
       }.freeze
 
+      desc <<~DESC
+        Copies one or more JetUi component source files into your application
+        so they can be customised locally. Ejected files take precedence over
+        the gem's built-in versions automatically — no extra configuration needed.
+
+        Available components (#{MANIFEST.size}):
+        #{MANIFEST.keys.sort.join(', ')}
+
+        Examples:
+          rails generate jet_ui:eject btn
+          rails generate jet_ui:eject flash
+          rails generate jet_ui:eject modal drawer
+          rails generate jet_ui:eject btn --skip-test
+          rails generate jet_ui:eject btn --skip-preview
+          rails generate jet_ui:eject flash --skip-javascript
+          rails generate jet_ui:eject btn --skip-test --skip-preview
+      DESC
+
+      argument :components, type: :array, banner: 'component [component ...]',
+                            desc: 'One or more component names to eject (e.g. btn card)'
+
+      class_option :skip_test, type: :boolean, default: false,
+                               desc: 'Skip ejecting the component test file'
+
+      class_option :skip_preview, type: :boolean, default: false,
+                                  desc: 'Skip ejecting the ViewComponent preview file'
+
+      class_option :skip_javascript, type: :boolean, default: false,
+                                     desc: 'Skip ejecting the Stimulus controller JS file (for components that have one)'
+
       def eject_components
         unknown = components.map(&:downcase) - MANIFEST.keys
         if unknown.any?
           say "\nUnknown component(s): #{unknown.join(', ')}", :red
-          say "Available: #{MANIFEST.keys.join(', ')}\n", :red
+          say "Available: #{MANIFEST.keys.join(', ')}", :red
           exit 1
         end
 
